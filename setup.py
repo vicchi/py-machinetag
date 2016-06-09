@@ -1,14 +1,32 @@
-# $Id: setup.py,v 1.3 2007/08/28 15:38:19 asc Exp $
+#!/usr/bin/env python
 
-from distutils.core import setup
-import os.path
+import os, sys
+from shutil import rmtree
 
-setup(name="machinetag",
-      version="1.1",
-      description="Python class for parsing machine tags",
-      author="Aaron Straup Cope",
-      author_email="aaron@aaronland.net",
-      url="http://aaronland.info/python/machinetag",
-      license="Perl Artistic",
-      packages = ['machinetag'],
-      )
+cwd = os.path.dirname(os.path.realpath(sys.argv[0]))
+egg_info = cwd + "/machinetag.egg-info"
+if os.path.exists(egg_info):
+    rmtree(egg_info)
+
+from setuptools import setup, find_packages
+
+packages = find_packages()
+version = open("VERSION").read()
+desc = open("README.md").read()
+
+setup(
+    name='machinetag',
+    namespace_packages=['machinetag'],
+    version=version,
+    description='',
+    author='Mapzen',
+    url='https://github.com/whosonfirst/py-machinetag',
+    install_requires=[
+        ],
+    dependency_links=[
+        ],
+    packages=packages,
+    scripts=[
+        ],
+    download_url='https://github.com/whosonfirst/py-machinetag/releases/tag/' + version,
+    license='Perl Artistic')

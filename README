@@ -1,5 +1,8 @@
-Help on module machinetag:
+# py-machinetag
 
+## Usage
+
+```
 NAME
     machinetag
 
@@ -73,23 +76,4 @@ CLASSES
      |  value(self)
      |      Returns a string -- or if the value is numeric an integer or float --
      |      containing the machine tag object's value
-
-DATA
-    __author__ = 'Aaron Straup Cope'
-    __copyright__ = 'Copyright (c) 2007 Aaron Straup Cope. Perl Artistic L...
-    __cvsversion__ = '$Revision: 1.2 $'
-    __date__ = '$Date: 2007/08/28 02:40:20 $'
-    __package__ = 'machinetag'
-    __url__ = 'http://www.aaronland.info/python/machinetag/'
-    __version__ = '1.1'
-
-VERSION
-    1.1
-
-DATE
-    $Date: 2007/08/28 02:40:20 $
-
-AUTHOR
-    Aaron Straup Cope
-
-
+```
