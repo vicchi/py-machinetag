@@ -1,10 +1,5 @@
-__package__    = "machinetag"
-__version__    = "1.1"
-__author__     = "Aaron Straup Cope"
-__url__        = "http://www.aaronland.info/python/machinetag/"
-__cvsversion__ = "$Revision: 1.3 $"
-__date__       = "$Date: 2007/08/28 15:38:19 $"
-__copyright__  = "Copyright (c) 2007 Aaron Straup Cope. Perl Artistic License."
+# https://pythonhosted.org/setuptools/setuptools.html#namespace-packages
+__import__('pkg_resources').declare_namespace(__name__)
 
 import re
 import types
