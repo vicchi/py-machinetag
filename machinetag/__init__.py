@@ -4,6 +4,42 @@ __import__('pkg_resources').declare_namespace(__name__)
 import re
 import types
 
+class sanitize:
+
+    def __init__ (self):
+
+        self.ns_filter = r'[^a-zA-Z0-9_]+'
+        self.pred_filter = r'[^a-zA-Z0-9_]+'
+        self.value_filter = None
+
+    def __filter__(self, v, p):
+
+        if p:
+            v = re.sub(p, '', v)
+
+        return v
+
+    def prepare_namespace(self, ns):
+        return ns
+
+    def prepare_predicate(self, pred):
+        return pred
+
+    def prepare_value(self, value):
+        return value
+
+    def filter_namespace(self, ns):
+        ns = self.prepare_namespace(ns)
+        return self.__filter__(ns, self.ns_filter)
+
+    def filter_predicate(self, pred):
+        pred = self.prepare_predicate(pred)
+        return self.__filter__(pred, self.pred_filter)
+
+    def filter_value(self, value):
+        value = self.prepare_predicate(value)
+        return self.__filter__(value, self.value_filter)
+
 class machinetag :
     """Object methods to parse and inspect machine tags
 
