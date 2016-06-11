@@ -7,6 +7,9 @@ import types
 def from_string(string, **kwargs):
     return machinetag(string, None, None, **kwargs)
 
+def from_triple(ns, pred, value, **kwargs):
+    return machinetag(ns, pred, value, **kwargs)
+
 class sanitize:
 
     def __init__ (self):
@@ -91,13 +94,34 @@ class machinetag :
         if pred :
 
             re_nspred = re.compile(r"^([a-z](?:[a-z0-9_]+))$", re.IGNORECASE)
+            re_nspred_wildcard = re.compile(r"^((?:[a-z](?:[a-z0-9_]+))|\*)$", re.IGNORECASE)
 
             if re_nspred.match(ns_or_tagraw) and re_nspred.match(pred) and value :
                 self.__namespace__ = ns_or_tagraw
                 self.__predicate__ = pred
                 self.__value__ = value
                 
-            # WILDCARD MACHINE TAGS
+            elif allow_wildcards:
+
+                ns_m = re_nspred_wildcard.findall(ns_or_tagraw)
+                pred_m = re_nspred_wildcard.findall(pred)
+
+                if ns_m and pred_m :
+
+                    if ns_m[0][0] != '*':
+                        self.__namespace__ = ns_or_tagraw
+
+                    if pred_m[0][0] != '*':
+                        self.__predicate__ = pred
+
+                    if value != '*' and value != '':
+                        self.__value__ = value
+
+                if self.__namespace__ != None or self.__predicate__ != None or self.__value__ != None:
+                    self.__iswildcard__ = True
+                    
+            else:
+                pass
 
         else :
 
@@ -127,6 +151,9 @@ class machinetag :
 
                     if m[0][2] != '*' and m[0][2] != '':
                         self.__value__ = m[0][2]
+
+                if self.__namespace__ != None or self.__predicate__ != None or self.__value__ != None:
+                    self.__iswildcard__ = True
 
             else:
                 pass
