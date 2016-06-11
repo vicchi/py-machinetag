@@ -4,6 +4,9 @@ __import__('pkg_resources').declare_namespace(__name__)
 import re
 import types
 
+def from_string(string, **kwargs):
+    return machinetag(string, None, None, **kwargs)
+
 class sanitize:
 
     def __init__ (self):
@@ -74,13 +77,16 @@ class machinetag :
         print "MT4 : type %s" % type(mt4.value())
     """
 
-    def __init__ (self, ns_or_tagraw, pred=None, value=None) :
+    def __init__ (self, ns_or_tagraw, pred=None, value=None, **kwargs) :
         """Parse a raw tag, or the component parts of machine tag and return a machine tag object"""
         self.__namespace__ = None
         self.__predicate__ = None
         self.__value__ = None
         self.__ismachinetag__ = False
+        self.__iswildcard__ = False
         self.__isnumeric__ = False
+
+        allow_wildcards = kwargs.get('allow_wildcards', False)
 
         if pred :
 
@@ -90,18 +96,51 @@ class machinetag :
                 self.__namespace__ = ns_or_tagraw
                 self.__predicate__ = pred
                 self.__value__ = value
+                
+            # WILDCARD MACHINE TAGS
+
         else :
 
             re_tag = re.compile(r"^([a-z](?:[a-z0-9_]+))\:([a-z](?:[a-z0-9_]+))\=(.+)$", re.IGNORECASE)
+            re_tag_wildcard = re.compile(r"^((?:[a-z](?:[a-z0-9_]+))|\*)\:((?:[a-z](?:[a-z0-9_]+))|\*)\=(.*)$", re.IGNORECASE)
+
             m = re_tag.findall(ns_or_tagraw)
 
             if m :
                 self.__namespace__ = m[0][0]
                 self.__predicate__ = m[0][1]
                 self.__value__ = m[0][2]
+                
+            elif allow_wildcards and not ns_or_tagraw in ('*:*=', '*:*=*'):
+
+                m = re_tag_wildcard.findall(ns_or_tagraw)
+
+                if m :
+
+                    self.__iswildcard__ = True
+
+                    if m[0][0] != '*':
+                        self.__namespace__ = m[0][0]
+
+                    if m[0][1] != '*':
+                        self.__predicate__ = m[0][1]
+
+                    if m[0][2] != '*' and m[0][2] != '':
+                        self.__value__ = m[0][2]
+
+            else:
+                pass
 
         if self.__namespace__ and self.__predicate__ and self.__value__ :
             self.__ismachinetag__ = True
+
+        elif self.__iswildcard__:
+            self.__ismachinetag__ = True
+
+        else:
+            pass
+
+        if self.__ismachinetag__ and self.__value__ != None:
 
             valtype = type(self.__value__)
 
@@ -142,6 +181,10 @@ class machinetag :
 
         return self.__ismachinetag__
 
+    def is_wildcard_machinetag (self) :
+
+        return self.__iswildcard__
+
     #
 
     def is_numeric (self) :
@@ -177,12 +220,33 @@ class machinetag :
     def as_string (self) :
         """Returns the object as formatted machine tag string"""
 
+        if self.is_wildcard_machinetag():
+
+            ns = self.namespace()
+            pred = self.predicate()
+            value = self.value()
+
+            if ns == None:
+                ns = "*"
+            
+            if pred == None:
+                pred = "*"
+
+            if value == None:
+                value = ""
+
+            return "%s:%s=%s" % (ns, pred, value)
+
         if self.is_machinetag() :
+
             return "%s:%s=%s" % (self.namespace(), self.predicate(), self.value())
 
     #
 
     def magic_8s(self):
+
+        if self.is_wildcard_machinetag():
+            raise Exception, "magic_8s not supported for wildcard machinetags"
 
         ns = self.namespace()
         pred = self.predicate()
