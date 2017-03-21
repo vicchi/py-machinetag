@@ -21,12 +21,8 @@ setup(
     description='',
     author='Mapzen',
     url='https://github.com/whosonfirst/py-machinetag',
-    install_requires=[
-        ],
-    dependency_links=[
-        ],
     packages=packages,
     scripts=[
-        ],
+    ],
     download_url='https://github.com/whosonfirst/py-machinetag/releases/tag/' + version,
     license='Perl Artistic')
