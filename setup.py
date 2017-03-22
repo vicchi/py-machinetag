@@ -16,7 +16,7 @@ desc = open("README.md").read()
 
 setup(
     name='machinetag',
-    namespace_packages=[],
+    namespace_packages=['machinetag', 'machinetag.elasticsearch'],
     version=version,
     description='',
     author='Mapzen',
