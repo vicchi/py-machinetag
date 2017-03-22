@@ -16,7 +16,7 @@ desc = open("README.md").read()
 
 setup(
     name='machinetag',
-    namespace_packages=['machinetag'],
+    namespace_packages=[],
     version=version,
     description='',
     author='Mapzen',
