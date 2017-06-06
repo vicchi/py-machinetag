@@ -1,6 +1,3 @@
-# https://pythonhosted.org/setuptools/setuptools.html#namespace-packages
-__import__('pkg_resources').declare_namespace(__name__)
-
 def escape(str):
 
     # If you need to use any of the characters which function as operators in
