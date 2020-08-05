@@ -1,5 +1,4 @@
 import re
-import types
 
 def from_string(string, **kwargs):
     return machinetag(string, None, None, **kwargs)
@@ -168,7 +167,7 @@ class machinetag :
 
             valtype = type(self.__value__)
 
-            if valtype == types.IntType or valtype == types.FloatType :
+            if valtype == int or valtype == float :
                 self.__isnumeric__ = True
             else :
                 re_num = re.compile(r"^-?\d+(\.\d+)?$", re.IGNORECASE)
