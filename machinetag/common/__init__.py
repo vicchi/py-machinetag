@@ -53,28 +53,28 @@ class machinetag :
     mt1 = machinetag(str_mt)
 
     if mt1.is_machinetag() :
-        print "MT1 : %s" % mt1
-        print "MT1 namespace : %s" % mt1.namespace()
+        print("MT1 : %s" % mt1)
+        print("MT1 namespace : %s" % mt1.namespace())
 
     mt2 = machinetag("aero", "airport", "SFO")
 
     if mt2.is_machinetag() :
-        print "MT2 : %s" % mt2
-        print "MT2 : is numeric %s" % mt2.is_numeric()
+        print("MT2 : %s" % mt2)
+        print("MT2 : is numeric %s" % mt2.is_numeric())
 
     mt3 = machinetag("temp", "celcius", 20)
 
     if mt3.is_machinetag() :
-        print "MT3 : %s" % mt3
-        print "MT3 : is numeric %s" % mt3.is_numeric()
-        print "MT3 : type %s" % type(mt3.value())
+        print("MT3 : %s" % mt3)
+        print("MT3 : is numeric %s" % mt3.is_numeric())
+        print("MT3 : type %s" % type(mt3.value()))
 
     mt4 = machinetag("geo:lat=24.234")
 
     if mt4.is_machinetag() :
-        print "MT4 : %s" % mt4
-        print "MT4 : is numeric %s" % mt4.is_numeric()
-        print "MT4 : type %s" % type(mt4.value())
+        print("MT4 : %s" % mt4)
+        print("MT4 : is numeric %s" % mt4.is_numeric())
+        print("MT4 : type %s" % type(mt4.value()))
     """
 
     def __init__ (self, ns_or_tagraw, pred=None, value=None, **kwargs) :
@@ -270,7 +270,7 @@ class machinetag :
     def magic_8s(self):
 
         if self.is_wildcard_machinetag():
-            raise Exception, "magic_8s not supported for wildcard machinetags"
+            raise Exception("magic_8s not supported for wildcard machinetags")
 
         ns = self.namespace()
         pred = self.predicate()
@@ -312,28 +312,28 @@ if __name__ == "__main__" :
     mt1 = machinetag(str_mt)
 
     if mt1.is_machinetag() :
-        print "MT1 : %s" % mt1
-        print "MT1 namespace : %s" % mt1.namespace()
+        print("MT1 : %s" % mt1)
+        print("MT1 namespace : %s" % mt1.namespace())
 
     mt2 = machinetag("aero", "airport", "SFO")
 
     if mt2.is_machinetag() :
-        print "MT2 : %s" % mt2
-        print "MT2 : is numeric %s" % mt2.is_numeric()
+        print("MT2 : %s" % mt2)
+        print("MT2 : is numeric %s" % mt2.is_numeric())
 
     mt3 = machinetag("temp", "celcius", 20)
 
     if mt3.is_machinetag() :
-        print "MT3 : %s" % mt3
-        print "MT3 : is numeric %s" % mt3.is_numeric()
-        print "MT3 : type %s" % type(mt3.value())
+        print("MT3 : %s" % mt3)
+        print("MT3 : is numeric %s" % mt3.is_numeric())
+        print("MT3 : type %s" % type(mt3.value()))
 
     mt4 = machinetag("geo:lat=24.234")
 
     if mt4.is_machinetag() :
-        print "MT4 : %s" % mt4
-        print "MT4 : is numeric %s" % mt4.is_numeric()
-        print "MT4 : type %s" % type(mt4.value())
+        print("MT4 : %s" % mt4)
+        print("MT4 : is numeric %s" % mt4.is_numeric())
+        print("MT4 : type %s" % type(mt4.value()))
 
     for p in mt1.magic_8s():
-        print "lazy 8s encoded: %s decoded: %s" % (p, mt1.decode_magic_8s(p))
+        print("lazy 8s encoded: %s decoded: %s" % (p, mt1.decode_magic_8s(p)))
